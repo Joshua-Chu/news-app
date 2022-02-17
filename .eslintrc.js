@@ -65,5 +65,6 @@ module.exports = {
         // consider changing this one
         "no-nested-ternary": "off",
         "import/no-unresolved": [2, { caseSensitive: false }],
+        "import/no-extraneous-dependencies": "off",
     },
 };

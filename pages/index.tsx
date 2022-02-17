@@ -1,11 +1,7 @@
-import styled from "styled-components";
-
-const StyledHeader = styled.h1`
-    color: "red";
-`;
+import { Heading } from "@chakra-ui/react";
 
 const Home = () => {
-    return <StyledHeader>hello</StyledHeader>;
+    return <Heading>Hello World</Heading>;
 };
 
 export default Home;
