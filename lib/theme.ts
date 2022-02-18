@@ -9,7 +9,12 @@ const config: ThemeConfig = {
     useSystemColorMode: false,
 };
 
+const fonts = {
+    heading: "Inter",
+    body: "Source Sans Pro",
+};
+
 // 3. extend the theme
-const theme = extendTheme({ config });
+const theme = extendTheme({ config, fonts });
 
 export default theme;
