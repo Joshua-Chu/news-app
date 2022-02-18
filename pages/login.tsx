@@ -23,13 +23,13 @@ const Login = () => {
                             <FormLabel htmlFor="username">
                                 <Text color="gray.600">username</Text>
                             </FormLabel>
-                            <Input id="username" type="username" size="md" />
+                            <Input id="username" type="text" size="md" />
                         </FormControl>
                         <FormControl>
                             <FormLabel htmlFor="password">
                                 <Text color="gray.600">password</Text>
                             </FormLabel>
-                            <Input id="password" type="username" size="md" />
+                            <Input id="password" type="text" size="md" />
                         </FormControl>
 
                         <Button

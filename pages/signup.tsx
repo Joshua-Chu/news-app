@@ -1,6 +1,7 @@
 import {
     Box,
     Button,
+    CloseButton,
     Container,
     Flex,
     FormControl,
@@ -9,10 +10,27 @@ import {
     Link,
     Text,
 } from "@chakra-ui/react";
+import Image from "next/image";
 import NextLink from "next/link";
+import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
 
 const SignUp = () => {
+    const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>("");
+
+    const imageUploadHandler = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+
+        const target = e.target as HTMLInputElement;
+        const reader = new FileReader();
+
+        reader.onload = onLoadEvent => {
+            setImageSrc(onLoadEvent.target && onLoadEvent.target.result);
+        };
+
+        reader.readAsDataURL((target.files && target.files[0]) as Blob);
+    };
+
     return (
         <Container>
             <SectionTitle>Register</SectionTitle>
@@ -23,14 +41,54 @@ const SignUp = () => {
                             <FormLabel htmlFor="username">
                                 <Text color="gray.600">username</Text>
                             </FormLabel>
-                            <Input id="username" type="username" size="md" />
+                            <Input id="username" type="text" size="md" />
                         </FormControl>
                         <FormControl>
                             <FormLabel htmlFor="password">
                                 <Text color="gray.600">password</Text>
                             </FormLabel>
-                            <Input id="password" type="username" size="md" />
+                            <Input id="password" type="text" size="md" />
                         </FormControl>
+
+                        <Flex direction="column" gap="32px">
+                            <FormControl>
+                                <FormLabel htmlFor="profile-photo">
+                                    <Text color="gray.600">profile photo</Text>
+                                </FormLabel>
+                                <Input
+                                    id="profile-photo"
+                                    type="file"
+                                    size="md"
+                                    onChange={imageUploadHandler}
+                                />
+                            </FormControl>
+                            {imageSrc && (
+                                <CloseButton onClick={() => setImageSrc("")} />
+                            )}
+
+                            <Box
+                                border={imageSrc ? "" : "1px"}
+                                w="full"
+                                h="380px"
+                                borderRadius="full"
+                                position="relative"
+                                sx={{
+                                    ".image-holder": {
+                                        borderRadius: "full",
+                                    },
+                                }}
+                            >
+                                {imageSrc && (
+                                    <>
+                                        <Image
+                                            className="image-holder"
+                                            src={imageSrc as unknown as string}
+                                            layout="fill"
+                                        />
+                                    </>
+                                )}
+                            </Box>
+                        </Flex>
 
                         <Button
                             alignSelf="center"

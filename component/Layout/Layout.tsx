@@ -13,7 +13,9 @@ export const Layout = ({ children, router }: LayoutProps) => {
     return (
         <Flex pt={50} minH="100vh" direction="column">
             <Navbar currPath={router.asPath} />
-            <Box flexGrow="1">{children}</Box>
+            <Box flexGrow="1" mb="80px">
+                {children}
+            </Box>
             <Footer />
         </Flex>
     );
