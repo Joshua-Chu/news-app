@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import { Logo } from "../Logo";
+import { Navbar } from "../Navbar";
 
 type LayoutProps = {
     children: React.ReactNode;
@@ -9,7 +9,7 @@ type LayoutProps = {
 export const Layout = ({ children }: LayoutProps) => {
     return (
         <Box pt={50}>
-            <Logo />
+            <Navbar />
             {children}
         </Box>
     );
