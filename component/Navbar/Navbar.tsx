@@ -6,16 +6,19 @@ type NavbarProps = {
     currPath: string;
 };
 
+// TODO : Abstract Nav link items
+
 export const Navbar = ({ currPath }: NavbarProps) => {
     return (
-        <Container
-            pb="34"
-            borderBottom="1px"
-            borderColor="gray.400"
-            boxShadow="sm"
-            mb="60px"
-        >
-            <Box display="flex" justifyContent="space-between">
+        <Container mb="60px">
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                borderBottom="1px"
+                pb="34"
+                borderColor="gray.400"
+                boxShadow="sm"
+            >
                 <Logo />
 
                 <Stack direction="row" color="gray.600">

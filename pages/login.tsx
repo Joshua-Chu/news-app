@@ -1,5 +1,11 @@
+import { SectionTitle } from "../component/SectionTitle";
+
 const Login = () => {
-    return <>login</>;
+    return (
+        <>
+            <SectionTitle>Login</SectionTitle>
+        </>
+    );
 };
 
 export default Login;
