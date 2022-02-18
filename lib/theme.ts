@@ -9,6 +9,8 @@ const config: ThemeConfig = {
     useSystemColorMode: false,
 };
 
+// TODO: Adjust Fonts
+
 const fonts = {
     heading: "Inter",
     body: "Source Sans Pro",
