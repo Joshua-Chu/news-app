@@ -4,11 +4,11 @@ import type { AppProps } from "next/app";
 import theme from "../lib/theme";
 import { Layout } from "../component/Layout";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
     return (
         <ChakraProvider theme={theme}>
-            <Layout>
-                <Component {...pageProps} />;
+            <Layout router={router}>
+                <Component {...pageProps} />
             </Layout>
         </ChakraProvider>
     );
