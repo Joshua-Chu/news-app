@@ -7,6 +7,7 @@ type NavbarProps = {
 };
 
 // TODO : Abstract Nav link items
+// TODO : Responsive Nav
 
 export const Navbar = ({ currPath }: NavbarProps) => {
     return (
