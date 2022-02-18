@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     Box,
     Button,
@@ -14,9 +15,15 @@ import Image from "next/image";
 import NextLink from "next/link";
 import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
+import { supabase } from "../lib/supabase/supabaseClient";
 
+// TODO: Abstract Input and Label in another component
+// TODO: Username to Email in Figma
 const SignUp = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>("");
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const imageUploadHandler = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -29,25 +36,76 @@ const SignUp = () => {
         };
 
         reader.readAsDataURL((target.files && target.files[0]) as Blob);
+
+        setImageFile(target.files && target.files[0]);
+    };
+
+    const onRegisterHandler = async (e: React.SyntheticEvent) => {
+        e.preventDefault();
+
+        // // Image
+        const formData = new FormData();
+        if (imageFile) {
+            formData.append("file", imageFile);
+        }
+        formData.append("upload_preset", "news-app");
+
+        // // Store images to Cloudinary
+        const data = await fetch(
+            "https://api.cloudinary.com/v1_1/dlfecpmkj/image/upload",
+            {
+                method: "POST",
+                body: formData,
+            }
+        ).then(r => r.json());
+
+        const { user } = await supabase.auth.signUp(
+            {
+                email,
+                password,
+            },
+            {
+                data: {
+                    profile_photo: data.secure_url,
+                },
+            }
+        );
+
+        if (user) {
+            setEmail("");
+            setPassword("");
+            setImageSrc("");
+            setImageFile(null);
+        }
     };
 
     return (
         <Container>
             <SectionTitle>Register</SectionTitle>
-            <form>
+            <form onSubmit={onRegisterHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
                     <Flex direction="column" gap="4">
                         <FormControl>
-                            <FormLabel htmlFor="username">
-                                <Text color="gray.600">username</Text>
+                            <FormLabel htmlFor="email">
+                                <Text color="gray.600">email</Text>
                             </FormLabel>
-                            <Input id="username" type="text" size="md" />
+                            <Input
+                                id="email"
+                                type="email"
+                                size="md"
+                                onChange={e => setEmail(e.target.value)}
+                            />
                         </FormControl>
                         <FormControl>
                             <FormLabel htmlFor="password">
                                 <Text color="gray.600">password</Text>
                             </FormLabel>
-                            <Input id="password" type="text" size="md" />
+                            <Input
+                                id="password"
+                                type="password"
+                                size="md"
+                                onChange={e => setPassword(e.target.value)}
+                            />
                         </FormControl>
 
                         <Flex direction="column" gap="32px">
@@ -100,6 +158,7 @@ const SignUp = () => {
                                 color: "gray.600",
                                 bg: "gray.100",
                             }}
+                            type="submit"
                         >
                             <Text>Register</Text>
                         </Button>
