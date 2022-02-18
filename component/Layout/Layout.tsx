@@ -1,6 +1,7 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { Router } from "next/router";
 import React from "react";
+import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
 
 type LayoutProps = {
@@ -10,9 +11,10 @@ type LayoutProps = {
 
 export const Layout = ({ children, router }: LayoutProps) => {
     return (
-        <Box pt={50}>
+        <Flex pt={50} minH="100vh" direction="column">
             <Navbar currPath={router.asPath} />
-            {children}
-        </Box>
+            <Box flexGrow="1">{children}</Box>
+            <Footer />
+        </Flex>
     );
 };
