@@ -8,9 +8,17 @@ import {
     Input,
     Text,
 } from "@chakra-ui/react";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
 
+const QuillNoSSRWrapper = dynamic(import("react-quill"), {
+    ssr: false,
+    loading: () => <p>Loading ...</p>,
+});
+
 const CreateNews = () => {
+    const [content, setContent] = useState("");
     return (
         <Container>
             <SectionTitle>Create</SectionTitle>
@@ -22,6 +30,21 @@ const CreateNews = () => {
                                 <Text color="gray.600">title</Text>
                             </FormLabel>
                             <Input id="title" type="text" size="md" />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel htmlFor="title">
+                                <Text color="gray.600">Content</Text>
+                            </FormLabel>
+
+                            <QuillNoSSRWrapper
+                                theme="snow"
+                                style={{
+                                    height: "500px",
+                                    marginBottom: "32px",
+                                }}
+                                value={content}
+                                onChange={setContent}
+                            />
                         </FormControl>
 
                         {/* <Flex direction="column" gap="32px">
