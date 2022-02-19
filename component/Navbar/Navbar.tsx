@@ -1,4 +1,11 @@
-import { Box, Button, Container, Heading, Stack } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Container,
+    Heading,
+    Stack,
+    useBreakpointValue,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { Logo } from "../Logo";
 
@@ -7,11 +14,12 @@ type NavbarProps = {
 };
 
 // TODO : Abstract Nav link items
-// TODO : Responsive Nav
 
 export const Navbar = ({ currPath }: NavbarProps) => {
+    const containerMaxW = useBreakpointValue({ md: "584px", lg: "996px" });
+
     return (
-        <Container mb="60px">
+        <Container mb="60px" maxW={containerMaxW}>
             <Box
                 display="flex"
                 justifyContent="space-between"
