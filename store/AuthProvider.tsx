@@ -34,7 +34,12 @@ type Props = {
 
 export function AuthProvider({ children }: Props) {
     const router = useRouter();
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [currentUser, setCurrentUser] = useState<User | null>({
+        id: "51cd5c4b-51e6-4160-a4aa-ebdcea08c747",
+        email: "test@test.com",
+        profilePhoto:
+            "https://res.cloudinary.com/dlfecpmkj/image/upload/v1645250567/news-upload/vusanttomwnsazygvovk.png",
+    });
 
     const login = async (email: string, password: string) => {
         const { user } = await supabase.auth.signIn({

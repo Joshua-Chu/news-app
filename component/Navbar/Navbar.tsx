@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Box,
     Button,
     Container,
@@ -8,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
+import { useAuth } from "../../store/AuthProvider";
 import { Logo } from "../Logo";
 
 type ButtonProps = {
@@ -61,8 +63,9 @@ type NavbarProps = {
 };
 
 // TODO : Abstract Nav link items
-
+// TODO : Home Link
 export const Navbar = ({ currPath }: NavbarProps) => {
+    const { currentUser } = useAuth();
     const containerMaxW = useBreakpointValue({ md: "584px", lg: "996px" });
 
     return (
@@ -78,12 +81,33 @@ export const Navbar = ({ currPath }: NavbarProps) => {
                 <Logo />
 
                 <Stack direction="row" color="gray.600">
-                    <GhostLink currPath={currPath} href="/login">
-                        Login
-                    </GhostLink>
-                    <SolidLink currPath={currPath} href="/signup">
-                        Sign up
-                    </SolidLink>
+                    {currentUser && (
+                        <>
+                            <SolidLink currPath={currPath} href="/login">
+                                Create
+                            </SolidLink>
+                            <GhostLink currPath={currPath} href="/signup">
+                                Logout
+                            </GhostLink>
+                            <Avatar
+                                name={currentUser.email}
+                                src={currentUser.profilePhoto as string}
+                                size="sm"
+                                bg="white"
+                            />
+                        </>
+                    )}
+
+                    {!currentUser && (
+                        <>
+                            <GhostLink currPath={currPath} href="/login">
+                                Login
+                            </GhostLink>
+                            <SolidLink currPath={currPath} href="/signup">
+                                Sign up
+                            </SolidLink>
+                        </>
+                    )}
                 </Stack>
             </Box>
         </Container>

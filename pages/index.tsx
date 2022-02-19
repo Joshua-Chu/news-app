@@ -5,7 +5,7 @@ const Home = () => {
     const { currentUser } = useAuth();
     return (
         <Box>
-            <pre>here: {JSON.stringify(currentUser)}</pre>
+            <pre>here: {JSON.stringify(currentUser, null, 2)}</pre>
             <Heading>news.</Heading>
             <Text>Hello World</Text>
         </Box>
