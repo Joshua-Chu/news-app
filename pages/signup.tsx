@@ -13,13 +13,18 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
-import { supabase } from "../lib/supabase/supabaseClient";
+import { useAuth } from "../store/AuthProvider";
 
 // TODO: Abstract Input and Label in another component
 // TODO: Username to Email in Figma
+//  TODO: Form validation
 const SignUp = () => {
+    const router = useRouter();
+    const { signup } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>("");
@@ -43,7 +48,7 @@ const SignUp = () => {
     const onRegisterHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
 
-        // // Image
+        // Extract Image
         const formData = new FormData();
         if (imageFile) {
             formData.append("file", imageFile);
@@ -59,23 +64,15 @@ const SignUp = () => {
             }
         ).then(r => r.json());
 
-        const { user } = await supabase.auth.signUp(
-            {
-                email,
-                password,
-            },
-            {
-                data: {
-                    profile_photo: data.secure_url,
-                },
-            }
-        );
+        const { status } = await signup(email, password, data.secure_url);
 
-        if (user) {
+        if (status === "success") {
             setEmail("");
             setPassword("");
             setImageSrc("");
             setImageFile(null);
+
+            router.push("/");
         }
     };
 
