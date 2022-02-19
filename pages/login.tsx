@@ -10,26 +10,47 @@ import {
     Link,
     Text,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
+import { useAuth } from "../store/AuthProvider";
 
 const Login = () => {
+    const { login } = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const onLoginHandler = async (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        login(email, password);
+    };
+
     return (
         <Container>
             <SectionTitle>Login</SectionTitle>
-            <form>
+            <form onSubmit={onLoginHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
                     <Flex direction="column" gap="4">
                         <FormControl>
-                            <FormLabel htmlFor="username">
-                                <Text color="gray.600">username</Text>
+                            <FormLabel htmlFor="email">
+                                <Text color="gray.600">email</Text>
                             </FormLabel>
-                            <Input id="username" type="text" size="md" />
+                            <Input
+                                id="email"
+                                type="email"
+                                size="md"
+                                onChange={e => setEmail(e.target.value)}
+                            />
                         </FormControl>
                         <FormControl>
                             <FormLabel htmlFor="password">
                                 <Text color="gray.600">password</Text>
                             </FormLabel>
-                            <Input id="password" type="text" size="md" />
+                            <Input
+                                id="password"
+                                type="password"
+                                size="md"
+                                onChange={e => setPassword(e.target.value)}
+                            />
                         </FormControl>
 
                         <Button
@@ -42,6 +63,7 @@ const Login = () => {
                                 color: "gray.600",
                                 bg: "gray.100",
                             }}
+                            type="submit"
                         >
                             <Text>Login</Text>
                         </Button>
