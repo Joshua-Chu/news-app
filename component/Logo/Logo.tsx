@@ -8,6 +8,7 @@ export const Logo = () => {
             display="flex"
             alignItems="center"
             onClick={() => router.push("/")}
+            cursor="pointer"
         >
             <Heading color="gray.600" fontSize="md">
                 news<chakra.span color="yellow.400">.</chakra.span>
