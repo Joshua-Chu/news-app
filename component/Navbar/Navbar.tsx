@@ -65,7 +65,7 @@ type NavbarProps = {
 // TODO : Home Link
 export const Navbar = ({ currPath }: NavbarProps) => {
     const { currentUser, logout } = useAuth();
-    const containerMaxW = useBreakpointValue({ md: "584px", lg: "996px" });
+    const containerMaxW = useBreakpointValue({ md: "800px", lg: "996px" });
 
     return (
         <Container mb="60px" maxW={containerMaxW}>

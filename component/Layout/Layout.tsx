@@ -10,7 +10,7 @@ type LayoutProps = {
 };
 
 export const Layout = ({ children, router }: LayoutProps) => {
-    const containerMaxW = useBreakpointValue({ md: "584px", lg: "996px" });
+    const containerMaxW = useBreakpointValue({ md: "800px", lg: "996px" });
 
     return (
         <Flex pt={50} minH="100vh" direction="column">
