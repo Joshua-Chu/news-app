@@ -12,24 +12,16 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
-import { supabase } from "../lib/supabase/supabaseClient";
+import { useAuth } from "../store/AuthProvider";
 
 const Login = () => {
+    const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const onLoginHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-
-        const { user } = await supabase.auth.signIn({
-            email,
-            password,
-        });
-
-        if (user) {
-            setEmail("");
-            setPassword("");
-        }
+        login(email, password);
     };
 
     return (
