@@ -26,7 +26,7 @@ const GhostLink = ({ currPath, children, href }: ButtonProps) => {
                 colorScheme="gray"
                 variant="ghost"
                 as="a"
-                bg={currPath === "/login" ? "gray.100" : ""}
+                bg={currPath === href ? "gray.100" : ""}
             >
                 <Heading as="p" fontSize="sm">
                     {children}
@@ -41,14 +41,14 @@ const SolidLink = ({ currPath, children, href }: ButtonProps) => {
         <NextLink href={href} passHref>
             <Button
                 size="sm"
-                bg={currPath === "/signup" ? "gray.100" : "gray.500"}
+                bg={currPath === href ? "gray.100" : "gray.500"}
                 variant="solid"
                 as="a"
                 _hover={{
-                    color: currPath === "/signup" ? "white" : "gray.600",
-                    bg: currPath === "/signup" ? "gray.500" : "gray.100",
+                    color: currPath === href ? "white" : "gray.600",
+                    bg: currPath === href ? "gray.500" : "gray.100",
                 }}
-                color={currPath === "/signup" ? "gray.600" : "white"}
+                color={currPath === href ? "gray.600" : "white"}
             >
                 <Heading as="p" fontSize="sm">
                     {children}
@@ -65,7 +65,7 @@ type NavbarProps = {
 // TODO : Abstract Nav link items
 // TODO : Home Link
 export const Navbar = ({ currPath }: NavbarProps) => {
-    const { currentUser } = useAuth();
+    const { currentUser, logout } = useAuth();
     const containerMaxW = useBreakpointValue({ md: "584px", lg: "996px" });
 
     return (
@@ -86,9 +86,16 @@ export const Navbar = ({ currPath }: NavbarProps) => {
                             <SolidLink currPath={currPath} href="/login">
                                 Create
                             </SolidLink>
-                            <GhostLink currPath={currPath} href="/signup">
-                                Logout
-                            </GhostLink>
+                            <Button
+                                size="sm"
+                                colorScheme="gray"
+                                variant="ghost"
+                                onClick={logout}
+                            >
+                                <Heading as="p" fontSize="sm">
+                                    Logout
+                                </Heading>
+                            </Button>
                             <Avatar
                                 name={currentUser.email}
                                 src={currentUser.profilePhoto as string}

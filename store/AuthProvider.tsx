@@ -14,6 +14,7 @@ export type authContextType = {
     ) => Promise<{
         status: string;
     }>;
+    logout: () => void;
 };
 
 const AuthContext = createContext<authContextType>({} as authContextType);
@@ -88,10 +89,16 @@ export function AuthProvider({ children }: Props) {
         return { status: "error" };
     };
 
+    const logout = async () => {
+        setCurrentUser(null);
+        router.push("/");
+    };
+
     const value = {
         currentUser,
         login,
         signup,
+        logout,
     };
 
     return (
