@@ -62,7 +62,6 @@ type NavbarProps = {
     currPath: string;
 };
 
-// TODO : Abstract Nav link items
 // TODO : Home Link
 export const Navbar = ({ currPath }: NavbarProps) => {
     const { currentUser, logout } = useAuth();
@@ -83,7 +82,7 @@ export const Navbar = ({ currPath }: NavbarProps) => {
                 <Stack direction="row" color="gray.600">
                     {currentUser && (
                         <>
-                            <SolidLink currPath={currPath} href="/login">
+                            <SolidLink currPath={currPath} href="/create">
                                 Create
                             </SolidLink>
                             <Button
