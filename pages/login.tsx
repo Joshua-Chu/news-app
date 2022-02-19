@@ -14,6 +14,8 @@ import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
 import { useAuth } from "../store/AuthProvider";
 
+// TODO : Remove data after login
+
 const Login = () => {
     const { login } = useAuth();
     const [email, setEmail] = useState("");
