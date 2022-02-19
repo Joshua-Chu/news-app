@@ -21,6 +21,8 @@ import { useAuth } from "../store/AuthProvider";
 // TODO: Abstract Input and Label in another component
 // TODO: Username to Email in Figma
 //  TODO: Form validation
+// TODO: Fix text alignment at the bottom
+
 const SignUp = () => {
     const router = useRouter();
     const { signup } = useAuth();
