@@ -18,6 +18,8 @@ type DeleteButtonProps = {
     id: string;
 };
 
+// TODO: router reload change
+
 export const DeleteButton = ({ title, id }: DeleteButtonProps) => {
     const router = useRouter();
     const { isOpen, onOpen, onClose } = useDisclosure();

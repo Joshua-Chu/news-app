@@ -11,7 +11,6 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { supabase } from "../../lib/supabase/supabaseClient";
 
 type EditButtonProps = {
     title: string;
@@ -22,11 +21,8 @@ export const EditButton = ({ title, id }: EditButtonProps) => {
     const router = useRouter();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const onDeleteNews = async () => {
-        const { data } = await supabase.from("news").delete().match({ id });
-        if (data) {
-            router.reload();
-        }
+    const onEditNews = async () => {
+        router.push(`/edit/${id}`);
     };
     return (
         <>
@@ -62,8 +58,8 @@ export const EditButton = ({ title, id }: EditButtonProps) => {
                         <Button colorScheme="red" mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant="ghost" onClick={onDeleteNews}>
-                            Delete
+                        <Button variant="ghost" onClick={onEditNews}>
+                            Edit
                         </Button>
                     </ModalFooter>
                 </ModalContent>
