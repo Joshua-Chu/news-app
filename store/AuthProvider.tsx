@@ -28,9 +28,6 @@ type Props = {
     children: React.ReactNode;
 };
 
-// TODO : ERROR STATE
-// TODO : error handling
-
 export function AuthProvider({ children }: Props) {
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState<User | null>(null);

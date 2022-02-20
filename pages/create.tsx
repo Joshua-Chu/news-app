@@ -12,7 +12,7 @@ import {
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
 import { SEO } from "../component/SEO";
 import { supabase } from "../lib/supabase/supabaseClient";
@@ -30,6 +30,12 @@ const CreateNews = () => {
     const [content, setContent] = useState("");
     const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>("");
     const [imageFile, setImageFile] = useState<File | null>(null);
+
+    useEffect(() => {
+        if (!currentUser) {
+            router.push("/login");
+        }
+    }, [currentUser, router]);
 
     const imageUploadHandler = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -99,7 +105,10 @@ const CreateNews = () => {
             />
             <SectionTitle>Create</SectionTitle>
             <form onSubmit={onCreateNewsHandler}>
-                <Box maxW={{ sm: "390px" }} mx="auto">
+                <Box
+                    maxW={{ sm: "390px", md: "800px", lg: "1080px" }}
+                    mx="auto"
+                >
                     <Flex direction="column" gap="4">
                         <FormControl>
                             <FormLabel htmlFor="title">
