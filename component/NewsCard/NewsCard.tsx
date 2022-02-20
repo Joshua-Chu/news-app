@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAuth } from "../../store/AuthProvider";
 import { DeleteButton } from "../DeleteButton";
+import { EditButton } from "../EditButton";
 
 type NewsCardProps = {
     id: string;
@@ -76,7 +77,10 @@ export const NewsCard = ({
                     {route === "/profile" &&
                         currentUser &&
                         author.id === currentUser.id && (
-                            <DeleteButton title={title} id={id} />
+                            <>
+                                <DeleteButton title={title} id={id} />
+                                <EditButton title={title} id={id} />
+                            </>
                         )}
                 </Box>
                 <Stack>
