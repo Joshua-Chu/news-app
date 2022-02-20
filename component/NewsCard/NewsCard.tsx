@@ -44,6 +44,7 @@ export const NewsCard = ({
             rounded="md"
             p={6}
             overflow="hidden"
+            cursor="pointer"
         >
             <Box h="200px" bg="gray.100" mt={-6} mx={-6} mb={6} pos="relative">
                 <Image src={banner} layout="fill" />
@@ -62,10 +63,7 @@ export const NewsCard = ({
                 />
             </Stack>
             <Stack mt={6} direction="row" spacing={4} align="center">
-                <Avatar
-                    src="https://res.cloudinary.com/dlfecpmkj/image/upload/v1645279013/news-upload/drpmrxq3hywlpyjlti6p.png"
-                    name="Author"
-                />
+                <Avatar src={author.profile_photo} name="Author" bg="unset" />
                 <Stack direction="column" spacing={0} fontSize="sm">
                     <Text fontWeight={600}>@{author.email.split("@")[0]}</Text>
                     <Text color="gray.500">{computedDate}· 6min read</Text>

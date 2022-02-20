@@ -7,6 +7,7 @@ import {
     Stack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import useBreakpointValue from "../../hooks/useBreakPointValue";
 import { useAuth } from "../../store/AuthProvider";
@@ -65,6 +66,7 @@ type NavbarProps = {
 // TODO : Home Link
 export const Navbar = ({ currPath }: NavbarProps) => {
     const { currentUser, logout } = useAuth();
+    const router = useRouter();
     const containerMaxW = useBreakpointValue({
         base: "584px",
         md: "800px",
@@ -104,6 +106,10 @@ export const Navbar = ({ currPath }: NavbarProps) => {
                                 src={currentUser.profilePhoto as string}
                                 size="sm"
                                 bg="white"
+                                cursor="pointer"
+                                onClick={() =>
+                                    router.push(`/profile/${currentUser.id}`)
+                                }
                             />
                         </>
                     )}
