@@ -15,7 +15,7 @@ const NewsDetails = ({ data }: NewsDetailsProps) => {
     const router = useRouter();
     return (
         <Box>
-            <Button onClick={() => router.push("/")}>
+            <Button onClick={() => router.push("/")} mb="48px">
                 <Text as="p" color="gray.500">
                     Back
                 </Text>
