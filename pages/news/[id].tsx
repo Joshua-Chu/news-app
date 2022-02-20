@@ -1,5 +1,6 @@
 import { Box, Heading } from "@chakra-ui/react";
 import Image from "next/image";
+import { Author } from "../../component/Author";
 
 const data = {
     id: "29cade65-ae8d-4901-bc66-aaa0addb2993",
@@ -23,6 +24,7 @@ const NewsDetails = () => {
                 {data.title}
             </Heading>
             <Box
+                mb="32px"
                 position="relative"
                 h="350px"
                 width={{ base: "100vw", lg: "auto" }}
@@ -33,6 +35,10 @@ const NewsDetails = () => {
             >
                 <Image src={data.banner} layout="fill" objectFit="cover" />
             </Box>
+            <Author
+                email={data.author.email}
+                profilePhoto={data.author.profile_photo}
+            />
         </Box>
     );
 };
