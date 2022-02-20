@@ -12,6 +12,15 @@ export type News = {
     };
 };
 
+export type RawNews = {
+    id: string;
+    created_at: string;
+    title: string;
+    content: string;
+    banner: string;
+    author: string;
+};
+
 export type ExtractedNews = {
     id: string;
     title: string;

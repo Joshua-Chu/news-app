@@ -5,20 +5,12 @@ import {
     Stack,
     Text,
     useColorModeValue,
-    Button,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    useDisclosure,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { supabase } from "../../lib/supabase/supabaseClient";
 import { useAuth } from "../../store/AuthProvider";
+import { DeleteButton } from "../DeleteButton";
+import { EditButton } from "../EditButton";
 
 type NewsCardProps = {
     id: string;
@@ -36,62 +28,6 @@ type NewsCardProps = {
 
 // TODO:  Add how many mins to read
 // TODO : proper redirection after delete
-
-type DeleteButtonProps = {
-    title: string;
-    id: string;
-};
-
-const DeleteButton = ({ title, id }: DeleteButtonProps) => {
-    const router = useRouter();
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const onDeleteNews = async () => {
-        const { data } = await supabase.from("news").delete().match({ id });
-        if (data) {
-            router.reload();
-        }
-    };
-    return (
-        <>
-            <Box
-                position="absolute"
-                fontSize="2xl"
-                right="2"
-                top="2"
-                visibility="hidden"
-                className="delete-btn"
-                onClick={onOpen}
-                _hover={{
-                    fontSize: "3xl",
-                    transition: "all 200ms ease",
-                }}
-            >
-                🗑️
-            </Box>
-
-            <Modal isOpen={isOpen} onClose={onClose} size="lg">
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Delete {title}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        Are you sure you want to delete {title}?
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme="red" mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button variant="ghost" onClick={onDeleteNews}>
-                            Delete
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </>
-    );
-};
 
 export const NewsCard = ({
     id,
@@ -141,7 +77,10 @@ export const NewsCard = ({
                     {route === "/profile" &&
                         currentUser &&
                         author.id === currentUser.id && (
-                            <DeleteButton title={title} id={id} />
+                            <>
+                                <DeleteButton title={title} id={id} />
+                                <EditButton title={title} id={id} />
+                            </>
                         )}
                 </Box>
                 <Stack>
