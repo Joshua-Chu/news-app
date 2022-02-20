@@ -10,7 +10,9 @@ export const Footer = () => {
                     passHref
                     href="https://www.linkedin.com/in/joshuachu627/"
                 >
-                    <Link target="_blank">Joshua Chu 🔥</Link>
+                    <Link target="_blank" rel="noreferrer">
+                        Joshua Chu 🔥
+                    </Link>
                 </NextLink>
             </Text>
         </Box>
