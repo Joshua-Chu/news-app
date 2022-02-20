@@ -2,6 +2,7 @@ import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useReadingTime } from "react-hook-reading-time";
 import { Author } from "../../component/Author";
 import { DeleteButton } from "../../component/DeleteButton";
 import { EditButton } from "../../component/EditButton";
@@ -18,6 +19,7 @@ type NewsDetailsProps = {
 const NewsDetails = ({ data }: NewsDetailsProps) => {
     const { currentUser } = useAuth();
     const router = useRouter();
+    const { text } = useReadingTime(data.content);
 
     return (
         <>
@@ -52,6 +54,9 @@ const NewsDetails = ({ data }: NewsDetailsProps) => {
                 <Heading as="h2" textAlign="center" mb="32px" color="gray.600">
                     {data.title}
                 </Heading>
+                <Text textAlign="center" color="gray.700" mb="32px">
+                    {text}
+                </Text>
                 <Box
                     mb="32px"
                     position="relative"

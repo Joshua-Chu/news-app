@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useReadingTime } from "react-hook-reading-time";
 import { useAuth } from "../../store/AuthProvider";
 import { DeleteButton } from "../DeleteButton";
 import { EditButton } from "../EditButton";
@@ -42,6 +43,7 @@ export const NewsCard = ({
     const { currentUser } = useAuth();
     const router = useRouter();
     const computedDate = new Date(created_at).toDateString().slice(4).trim();
+    const { text } = useReadingTime(content);
     return (
         <>
             <Box
@@ -115,7 +117,9 @@ export const NewsCard = ({
                         <Text fontWeight={600}>
                             @{author.email.split("@")[0]}
                         </Text>
-                        <Text color="gray.500">{computedDate}· 6min read</Text>
+                        <Text color="gray.500">
+                            {computedDate}· {text}
+                        </Text>
                     </Stack>
                 </Stack>
             </Box>
