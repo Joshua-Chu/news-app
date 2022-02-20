@@ -20,7 +20,7 @@ const data = {
 const NewsDetails = () => {
     return (
         <Box>
-            <Heading as="h2" textAlign="center" mb="32px">
+            <Heading as="h2" textAlign="center" mb="32px" color="gray.600">
                 {data.title}
             </Heading>
             <Box
@@ -38,6 +38,11 @@ const NewsDetails = () => {
             <Author
                 email={data.author.email}
                 profilePhoto={data.author.profile_photo}
+            />
+
+            <Box
+                color="gray.500"
+                dangerouslySetInnerHTML={{ __html: data.content }}
             />
         </Box>
     );
