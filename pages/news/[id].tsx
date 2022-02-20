@@ -25,7 +25,7 @@ const NewsDetails = ({ data }: NewsDetailsProps) => {
                 url={router.asPath}
                 openGraphType="website"
                 schemaType="article"
-                title={data.title}
+                title={`${data.title} | news`}
                 description={data.title}
                 image={data.banner}
             />

@@ -114,6 +114,8 @@ const EditNews = ({ data }: EditNewsProps) => {
                 url={router.asPath}
                 openGraphType="website"
                 schemaType="article"
+                title={`Edit | ${data.title}`}
+                description={`Editing | ${data.title}`}
             />
             <SectionTitle>Edit</SectionTitle>
             <form onSubmit={onEditNewsHandler}>
