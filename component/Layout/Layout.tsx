@@ -1,6 +1,7 @@
-import { Box, Container, Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Container, Flex } from "@chakra-ui/react";
 import { Router } from "next/router";
 import React from "react";
+import useBreakpointValue from "../../hooks/useBreakPointValue";
 import { Footer } from "../Footer";
 import { Navbar } from "../Navbar";
 
@@ -10,7 +11,11 @@ type LayoutProps = {
 };
 
 export const Layout = ({ children, router }: LayoutProps) => {
-    const containerMaxW = useBreakpointValue({ md: "800px", lg: "996px" });
+    const containerMaxW = useBreakpointValue({
+        base: "584px",
+        md: "800px",
+        lg: "996px",
+    });
 
     return (
         <Flex pt={50} minH="100vh" direction="column">
