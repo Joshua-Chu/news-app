@@ -92,8 +92,17 @@ export const NewsCard = ({
                     </Heading>
                     <Box
                         color="gray.500"
-                        dangerouslySetInnerHTML={{ __html: content }}
+                        dangerouslySetInnerHTML={{
+                            __html: content
+                                .replace(/<a/g, "<span")
+                                .replace(/a>/g, "span>"),
+                        }}
                         noOfLines={3}
+                        sx={{
+                            a: {
+                                outline: "none",
+                            },
+                        }}
                     />
                 </Stack>
                 <Stack mt={6} direction="row" spacing={4} align="center">
