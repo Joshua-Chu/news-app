@@ -122,6 +122,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             props: {
                 data: extractedNews[0],
             },
+            revalidate: 5,
         };
     }
 
@@ -129,6 +130,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         props: {
             data: [],
         },
-        revalidate: 5,
     };
 };
