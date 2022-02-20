@@ -15,7 +15,7 @@ const Home = ({ data }: HomeProps) => {
             <SEO
                 openGraphType="website"
                 schemaType="article"
-                title="Home | new."
+                title="Home | news."
                 description="Home Page"
             />
             <Grid

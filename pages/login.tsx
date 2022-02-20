@@ -13,6 +13,7 @@ import {
 import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
 import { useAuth } from "../store/AuthProvider";
+import { SEO } from "../component/SEO";
 
 // TODO : Remove data after login
 
@@ -28,6 +29,12 @@ const Login = () => {
 
     return (
         <Container>
+            <SEO
+                openGraphType="website"
+                schemaType="article"
+                title="Login | news."
+                description="Login Page"
+            />
             <SectionTitle>Login</SectionTitle>
             <form onSubmit={onLoginHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
