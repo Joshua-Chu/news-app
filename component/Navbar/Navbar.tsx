@@ -5,10 +5,10 @@ import {
     Container,
     Heading,
     Stack,
-    useBreakpointValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
+import useBreakpointValue from "../../hooks/useBreakPointValue";
 import { useAuth } from "../../store/AuthProvider";
 import { Logo } from "../Logo";
 
@@ -65,7 +65,11 @@ type NavbarProps = {
 // TODO : Home Link
 export const Navbar = ({ currPath }: NavbarProps) => {
     const { currentUser, logout } = useAuth();
-    const containerMaxW = useBreakpointValue({ md: "800px", lg: "996px" });
+    const containerMaxW = useBreakpointValue({
+        base: "584px",
+        md: "800px",
+        lg: "996px",
+    });
 
     return (
         <Container mb="60px" maxW={containerMaxW}>
