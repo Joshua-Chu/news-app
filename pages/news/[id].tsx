@@ -1,5 +1,5 @@
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
-import { GetServerSideProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Author } from "../../component/Author";
@@ -64,14 +64,34 @@ const NewsDetails = ({ data }: NewsDetailsProps) => {
 
 export default NewsDetails;
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-    const { id } = params as { id: string };
+export const getStaticPaths: GetStaticPaths = async () => {
+    const { data: news } = await supabase.from<News>("news").select(`*`);
 
+    if (news) {
+        const paths = news.map(n => ({
+            params: { id: n.id },
+        }));
+
+        return {
+            paths,
+            fallback: "blocking",
+        };
+    }
+
+    return {
+        paths: [],
+        fallback: "blocking",
+    };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const { id } = params as { id: string };
     const { data: news } = await supabase
         .from<News>("news")
         .select(
             `*,
-        users(id, email, profile_photo)`
+            users(id, email, profile_photo)
+            `
         )
         .eq("id", id);
 
@@ -88,5 +108,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         props: {
             data: [],
         },
+        revalidate: 60 * 5,
     };
 };
