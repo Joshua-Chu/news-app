@@ -1,8 +1,10 @@
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useReadingTime } from "react-hook-reading-time";
+import DefaultErrorPage from "next/error";
 import { Author } from "../../component/Author";
 import { DeleteButton } from "../../component/DeleteButton";
 import { EditButton } from "../../component/EditButton";
@@ -19,7 +21,18 @@ type NewsDetailsProps = {
 const NewsDetails = ({ data }: NewsDetailsProps) => {
     const { currentUser } = useAuth();
     const router = useRouter();
-    const { text } = useReadingTime(data.content);
+    const { text } = useReadingTime(data.content || "");
+
+    if (!data) {
+        return (
+            <>
+                <Head>
+                    <meta name="robots" content="noindex" />
+                </Head>
+                <DefaultErrorPage statusCode={404} />
+            </>
+        );
+    }
 
     return (
         <>
