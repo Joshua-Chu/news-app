@@ -77,7 +77,7 @@ const Login = () => {
                                 fontSize={{ base: "sm", sm: "md" }}
                             >
                                 Don&apos;t have an account yet?{" "}
-                                <NextLink href="/signup" passHref>
+                                <NextLink href="/signup " passHref>
                                     <Link color="gray.600" fontWeight="bold">
                                         Register here
                                     </Link>
