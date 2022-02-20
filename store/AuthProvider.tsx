@@ -15,6 +15,7 @@ export type authContextType = {
         status: string;
     }>;
     logout: () => void;
+    loading: boolean;
 };
 
 const AuthContext = createContext<authContextType>({} as authContextType);
@@ -29,13 +30,12 @@ type Props = {
 
 // TODO : LOADING STATE
 // TODO : ERROR STATE
-// TODO : Get Cache
-// TODO : Route at request
 // TODO : error handling
 
 export function AuthProvider({ children }: Props) {
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!currentUser) {
@@ -52,6 +52,7 @@ export function AuthProvider({ children }: Props) {
     }, [currentUser]);
 
     const login = async (email: string, password: string) => {
+        setLoading(true);
         const { user } = await supabase.auth.signIn({
             email,
             password,
@@ -63,8 +64,8 @@ export function AuthProvider({ children }: Props) {
                 email: user.email as string,
                 profilePhoto: user.user_metadata.profile_photo,
             });
-
             router.push("/");
+            setLoading(false);
         }
     };
 
@@ -73,6 +74,7 @@ export function AuthProvider({ children }: Props) {
         password: string,
         profilePhoto: string
     ) => {
+        setLoading(true);
         const { user } = await supabase.auth.signUp(
             {
                 email,
@@ -100,6 +102,7 @@ export function AuthProvider({ children }: Props) {
                     email: data[0].email as string,
                     profilePhoto: data[0].profile_photo,
                 });
+                setLoading(false);
                 return { status: "success" };
             }
 
@@ -122,6 +125,7 @@ export function AuthProvider({ children }: Props) {
         login,
         signup,
         logout,
+        loading,
     };
 
     return (

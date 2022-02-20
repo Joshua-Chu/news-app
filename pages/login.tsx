@@ -18,7 +18,7 @@ import { SEO } from "../component/SEO";
 // TODO : Remove data after login
 
 const Login = () => {
-    const { login } = useAuth();
+    const { login, loading } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -64,6 +64,7 @@ const Login = () => {
                         </FormControl>
 
                         <Button
+                            isLoading={loading}
                             alignSelf="center"
                             minW="150px"
                             mt="48px"

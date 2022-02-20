@@ -26,7 +26,7 @@ import { useAuth } from "../store/AuthProvider";
 
 const SignUp = () => {
     const router = useRouter();
-    const { signup } = useAuth();
+    const { signup, loading } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -156,6 +156,7 @@ const SignUp = () => {
                         </Flex>
 
                         <Button
+                            isLoading={loading}
                             alignSelf="center"
                             minW="150px"
                             mt="48px"
@@ -176,10 +177,10 @@ const SignUp = () => {
                                 color="gray.500"
                                 fontSize={{ base: "sm", sm: "md" }}
                             >
-                                Don&apos;t have an account yet?{" "}
-                                <NextLink href="/register" passHref>
+                                Already have an account?{" "}
+                                <NextLink href="/login" passHref>
                                     <Link color="gray.600" fontWeight="bold">
-                                        Register here
+                                        Login here
                                     </Link>
                                 </NextLink>
                             </Text>
