@@ -28,7 +28,11 @@ const MyProfile = ({ data }: MyProfileProps) => {
                 gap="20px"
             >
                 {data.map(cardData => (
-                    <NewsCard {...cardData} key={cardData.id} />
+                    <NewsCard
+                        {...cardData}
+                        key={cardData.id}
+                        route="/profile"
+                    />
                 ))}
             </Grid>
         </Box>

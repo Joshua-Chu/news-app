@@ -21,7 +21,7 @@ const Home = ({ data }: HomeProps) => {
                 gap="20px"
             >
                 {data.map(cardData => (
-                    <NewsCard {...cardData} key={cardData.id} />
+                    <NewsCard {...cardData} key={cardData.id} route="/home" />
                 ))}
             </Grid>
         </Box>

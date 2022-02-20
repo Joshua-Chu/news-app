@@ -7,6 +7,7 @@ import {
     useColorModeValue,
 } from "@chakra-ui/react";
 import Image from "next/image";
+import { useAuth } from "../../store/AuthProvider";
 
 type NewsCardProps = {
     id: string;
@@ -19,6 +20,7 @@ type NewsCardProps = {
         email: string;
         profile_photo: string;
     };
+    route: string;
 };
 
 // TODO: Add how many mins to read
@@ -31,7 +33,9 @@ export const NewsCard = ({
     // eslint-disable-next-line camelcase
     created_at,
     author,
+    route,
 }: NewsCardProps) => {
+    const { currentUser } = useAuth();
     const computedDate = new Date(created_at).toDateString().slice(4).trim();
     return (
         <Box
@@ -45,9 +49,36 @@ export const NewsCard = ({
             p={6}
             overflow="hidden"
             cursor="pointer"
+            sx={{
+                "&:hover": {
+                    ".delete-btn": {
+                        visibility: "visible",
+                        transition: "all 1s ease",
+                    },
+                },
+            }}
         >
             <Box h="200px" bg="gray.100" mt={-6} mx={-6} mb={6} pos="relative">
                 <Image src={banner} layout="fill" />
+                {route === "/profile" &&
+                    currentUser &&
+                    author.id === currentUser.id && (
+                        <Box
+                            position="absolute"
+                            fontSize="2xl"
+                            right="2"
+                            top="2"
+                            visibility="hidden"
+                            className="delete-btn"
+                            onClick={() => alert("hey")}
+                            _hover={{
+                                fontSize: "3xl",
+                                transition: "all 200ms ease",
+                            }}
+                        >
+                            🗑️
+                        </Box>
+                    )}
             </Box>
             <Stack>
                 <Heading
