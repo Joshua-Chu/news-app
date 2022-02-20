@@ -12,6 +12,7 @@ import {
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SectionTitle } from "../../component/SectionTitle";
 import { supabase } from "../../lib/supabase/supabaseClient";
@@ -28,8 +29,8 @@ type EditNewsProps = {
 };
 
 const EditNews = ({ data }: EditNewsProps) => {
-    // console.log(data);
     const { currentUser } = useAuth();
+    const router = useRouter();
 
     const [title, setTitle] = useState(data.title);
     const [content, setContent] = useState(data.content);
@@ -53,48 +54,63 @@ const EditNews = ({ data }: EditNewsProps) => {
         setImageFile(target.files && target.files[0]);
     };
 
-    const onCreateNewsHandler = async (e: React.SyntheticEvent) => {
+    const onEditNewsHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
 
         // Extract Image
-        const formData = new FormData();
-        if (imageFile) {
-            formData.append("file", imageFile);
-        }
-        formData.append("upload_preset", "news-app");
 
-        // // Store images to Cloudinary
-        const imageData = await fetch(
-            "https://api.cloudinary.com/v1_1/dlfecpmkj/image/upload",
-            {
-                method: "POST",
-                body: formData,
+        let newsEditData = {
+            title,
+            content,
+            banner: data.banner,
+            author: currentUser?.id,
+        };
+
+        if (imageSrc !== data.banner) {
+            const formData = new FormData();
+            if (imageFile) {
+                formData.append("file", imageFile);
             }
-        ).then(r => r.json());
+            formData.append("upload_preset", "news-app");
 
-        // Create Post
+            // // Store images to Cloudinary
+            const imageData = await fetch(
+                "https://api.cloudinary.com/v1_1/dlfecpmkj/image/upload",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            ).then(r => r.json());
 
-        const { data: newsData } = await supabase.from("news").insert([
-            {
+            newsEditData = {
                 title,
                 content,
                 banner: imageData.secure_url,
                 author: currentUser?.id,
-            },
-        ]);
+            };
+        }
+
+        // Update Post
+
+        const { data: newsData } = await supabase
+            .from("news")
+            .update([newsEditData])
+            .eq("id", data.id);
 
         if (newsData) {
             setTitle("");
             setContent("");
             setImageSrc("");
             setImageFile(null);
+
+            router.push(`/news/${data.id}`);
         }
     };
 
     return (
         <Container>
             <SectionTitle>Edit</SectionTitle>
-            <form onSubmit={onCreateNewsHandler}>
+            <form onSubmit={onEditNewsHandler}>
                 <Box maxW={{ sm: "390px", md: "800px", lg: "996px" }} mx="auto">
                     <Flex direction="column" gap="4">
                         <FormControl>
@@ -124,7 +140,6 @@ const EditNews = ({ data }: EditNewsProps) => {
                                 onChange={setContent}
                             />
                         </FormControl>
-
                         <Flex direction="column" gap="32px" mt="32px">
                             <FormControl>
                                 <FormLabel htmlFor="profile-photo">
@@ -158,20 +173,32 @@ const EditNews = ({ data }: EditNewsProps) => {
                             </Box>
                         </Flex>
 
-                        <Button
-                            alignSelf="center"
-                            minW="150px"
-                            mt="48px"
-                            bg="gray.700"
-                            color="white"
-                            _hover={{
-                                color: "gray.600",
-                                bg: "gray.100",
-                            }}
-                            type="submit"
-                        >
-                            <Text>Update</Text>
-                        </Button>
+                        <Flex justifyContent="space-between">
+                            <Button
+                                alignSelf="center"
+                                minW="150px"
+                                mt="48px"
+                                color="gray.600"
+                                type="submit"
+                                variant="ghost"
+                            >
+                                <Text>Cancel</Text>
+                            </Button>{" "}
+                            <Button
+                                alignSelf="center"
+                                minW="150px"
+                                mt="48px"
+                                bg="gray.700"
+                                color="white"
+                                _hover={{
+                                    color: "gray.600",
+                                    bg: "gray.100",
+                                }}
+                                type="submit"
+                            >
+                                <Text>Update</Text>
+                            </Button>
+                        </Flex>
                     </Flex>
                 </Box>
             </form>
