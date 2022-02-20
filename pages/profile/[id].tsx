@@ -1,16 +1,17 @@
-import { Box, Grid } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import { NewsCard } from "../component/NewsCard";
-import { supabase } from "../lib/supabase/supabaseClient";
-import { ExtractedNews, News } from "../types/news";
-import { extractNews } from "../utils";
+import { supabase } from "../../lib/supabase/supabaseClient";
+import { News, ExtractedNews } from "../../types/news";
+import { extractNews } from "../../utils";
+import { NewsCard } from "../../component/NewsCard";
 
-type HomeProps = {
-    data: ExtractedNews[] | [];
+type MyProfileProps = {
+    data: ExtractedNews[];
 };
-const Home = ({ data }: HomeProps) => {
+
+const MyProfile = ({ data }: MyProfileProps) => {
     return (
-        <Box>
+        <>
             <Grid
                 justifyContent="center"
                 templateColumns={{
@@ -24,17 +25,23 @@ const Home = ({ data }: HomeProps) => {
                     <NewsCard {...cardData} key={cardData.id} />
                 ))}
             </Grid>
-        </Box>
+        </>
     );
 };
 
-export default Home;
+export default MyProfile;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const { data: news } = await supabase.from<News>("news").select(`
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+    const { id } = params as { id: string };
+    const { data: news } = await supabase
+        .from<News>("news")
+        .select(
+            `
     *,
     users(id, email, profile_photo)
-  `);
+  `
+        )
+        .eq("author", id);
 
     if (news) {
         const extractedNews = extractNews(news);
@@ -47,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
     return {
         props: {
-            data: [],
+            data: news,
         },
     };
 };
