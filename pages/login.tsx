@@ -1,30 +1,29 @@
 import NextLink from "next/link";
-import {
-    Box,
-    Button,
-    Container,
-    Flex,
-    FormControl,
-    FormLabel,
-    Input,
-    Link,
-    Text,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Link, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { SectionTitle } from "../component/SectionTitle";
 import { useAuth } from "../store/AuthProvider";
 import { SEO } from "../component/SEO";
-
-// TODO : Remove data after login
+import { FormInput } from "../component/FornInput";
 
 const Login = () => {
-    const { login } = useAuth();
+    const router = useRouter();
+    const { login, loading } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const onLoginHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        login(email, password);
+        const { status } = (await login(email, password)) as unknown as {
+            status: string;
+        };
+
+        if (status === "success") {
+            setEmail("");
+            setPassword("");
+            router.push("/");
+        }
     };
 
     return (
@@ -40,30 +39,23 @@ const Login = () => {
             <form onSubmit={onLoginHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
                     <Flex direction="column" gap="4">
-                        <FormControl>
-                            <FormLabel htmlFor="email">
-                                <Text color="gray.600">email</Text>
-                            </FormLabel>
-                            <Input
-                                id="email"
-                                type="email"
-                                size="md"
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="password">
-                                <Text color="gray.600">password</Text>
-                            </FormLabel>
-                            <Input
-                                id="password"
-                                type="password"
-                                size="md"
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </FormControl>
+                        <FormInput
+                            value={email}
+                            onChange={setEmail}
+                            type="email"
+                        >
+                            email
+                        </FormInput>
+                        <FormInput
+                            value={password}
+                            onChange={setPassword}
+                            type="password"
+                        >
+                            password
+                        </FormInput>
 
                         <Button
+                            isLoading={loading}
                             alignSelf="center"
                             minW="150px"
                             mt="48px"

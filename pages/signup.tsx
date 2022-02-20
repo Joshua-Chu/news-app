@@ -15,18 +15,16 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { FormInput } from "../component/FornInput";
 import { SectionTitle } from "../component/SectionTitle";
 import { SEO } from "../component/SEO";
 import { useAuth } from "../store/AuthProvider";
 
-// TODO: Abstract Input and Label in another component
-// TODO: Username to Email in Figma
 //  TODO: Form validation
-// TODO: Fix text alignment at the bottom
 
 const SignUp = () => {
     const router = useRouter();
-    const { signup } = useAuth();
+    const { signup, loading } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -92,29 +90,20 @@ const SignUp = () => {
             <form onSubmit={onRegisterHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
                     <Flex direction="column" gap="4">
-                        <FormControl>
-                            <FormLabel htmlFor="email">
-                                <Text color="gray.600">email</Text>
-                            </FormLabel>
-                            <Input
-                                id="email"
-                                type="email"
-                                size="md"
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="password">
-                                <Text color="gray.600">password</Text>
-                            </FormLabel>
-                            <Input
-                                id="password"
-                                type="password"
-                                size="md"
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </FormControl>
-
+                        <FormInput
+                            value={email}
+                            onChange={setEmail}
+                            type="email"
+                        >
+                            email
+                        </FormInput>
+                        <FormInput
+                            value={password}
+                            onChange={setPassword}
+                            type="password"
+                        >
+                            password
+                        </FormInput>
                         <Flex direction="column" gap="32px">
                             <FormControl>
                                 <FormLabel htmlFor="profile-photo">
@@ -156,6 +145,7 @@ const SignUp = () => {
                         </Flex>
 
                         <Button
+                            isLoading={loading}
                             alignSelf="center"
                             minW="150px"
                             mt="48px"
@@ -176,10 +166,10 @@ const SignUp = () => {
                                 color="gray.500"
                                 fontSize={{ base: "sm", sm: "md" }}
                             >
-                                Don&apos;t have an account yet?{" "}
-                                <NextLink href="/register" passHref>
+                                Already have an account?{" "}
+                                <NextLink href="/login" passHref>
                                     <Link color="gray.600" fontWeight="bold">
-                                        Register here
+                                        Login here
                                     </Link>
                                 </NextLink>
                             </Text>

@@ -81,6 +81,7 @@ const CreateNews = () => {
             setContent("");
             setImageSrc("");
             setImageFile(null);
+            router.push(`/profile/${currentUser?.id}`);
         }
     };
 

@@ -63,7 +63,6 @@ type NavbarProps = {
     currPath: string;
 };
 
-// TODO : Home Link
 export const Navbar = ({ currPath }: NavbarProps) => {
     const { currentUser, logout } = useAuth();
     const router = useRouter();
