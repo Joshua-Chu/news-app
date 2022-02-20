@@ -11,20 +11,28 @@ import {
     Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { SectionTitle } from "../component/SectionTitle";
 import { useAuth } from "../store/AuthProvider";
 import { SEO } from "../component/SEO";
 
-// TODO : Remove data after login
-
 const Login = () => {
+    const router = useRouter();
     const { login, loading } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const onLoginHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        login(email, password);
+        const { status } = (await login(email, password)) as unknown as {
+            status: string;
+        };
+
+        if (status === "success") {
+            setEmail("");
+            setPassword("");
+            router.push("/");
+        }
     };
 
     return (

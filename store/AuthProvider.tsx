@@ -28,7 +28,6 @@ type Props = {
     children: React.ReactNode;
 };
 
-// TODO : LOADING STATE
 // TODO : ERROR STATE
 // TODO : error handling
 
@@ -64,9 +63,11 @@ export function AuthProvider({ children }: Props) {
                 email: user.email as string,
                 profilePhoto: user.user_metadata.profile_photo,
             });
-            router.push("/");
             setLoading(false);
+            return { status: "success" };
         }
+
+        return { status: "error" };
     };
 
     const signup = async (
