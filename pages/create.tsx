@@ -99,7 +99,10 @@ const CreateNews = () => {
             />
             <SectionTitle>Create</SectionTitle>
             <form onSubmit={onCreateNewsHandler}>
-                <Box maxW={{ sm: "390px" }} mx="auto">
+                <Box
+                    maxW={{ sm: "390px", md: "800px", lg: "1080px" }}
+                    mx="auto"
+                >
                     <Flex direction="column" gap="4">
                         <FormControl>
                             <FormLabel htmlFor="title">
