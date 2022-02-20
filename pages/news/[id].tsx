@@ -1,6 +1,7 @@
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Author } from "../../component/Author";
 import { supabase } from "../../lib/supabase/supabaseClient";
 import { ExtractedNews, News } from "../../types/news";
@@ -11,9 +12,10 @@ type NewsDetailsProps = {
 };
 
 const NewsDetails = ({ data }: NewsDetailsProps) => {
+    const router = useRouter();
     return (
         <Box>
-            <Button>
+            <Button onClick={() => router.push("/")}>
                 <Text as="p" color="gray.500">
                     Back
                 </Text>
