@@ -3,3 +3,9 @@ export interface User {
     email: string;
     profilePhoto: string;
 }
+
+export type UsersTable = {
+    id: string;
+    email: string;
+    profile_photo: string;
+};

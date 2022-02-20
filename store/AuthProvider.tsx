@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { createContext, useContext, useState } from "react";
 import { supabase } from "../lib/supabase/supabaseClient";
 
-import { User } from "../types";
+import { User, UsersTable } from "../types";
 
 export type authContextType = {
     currentUser: User | null;
@@ -91,13 +91,24 @@ export function AuthProvider({ children }: Props) {
         );
 
         if (user) {
-            setCurrentUser({
-                id: user.id,
-                email: user.email as string,
-                profilePhoto: user.user_metadata.profile_photo,
-            });
+            const { data } = await supabase.from<UsersTable>("users").insert([
+                {
+                    id: user.id,
+                    email: user.email,
+                    profile_photo: user.user_metadata.profile_photo,
+                },
+            ]);
 
-            return { status: "success" };
+            if (data) {
+                setCurrentUser({
+                    id: data[0].id,
+                    email: data[0].email as string,
+                    profilePhoto: data[0].profile_photo,
+                });
+                return { status: "success" };
+            }
+
+            return { status: "error" };
         }
 
         return { status: "error" };
