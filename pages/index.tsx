@@ -1,6 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { NewsCard } from "../component/NewsCard";
+import { SEO } from "../component/SEO";
 import { supabase } from "../lib/supabase/supabaseClient";
 import { ExtractedNews, News } from "../types/news";
 import { extractNews } from "../utils";
@@ -11,6 +12,12 @@ type HomeProps = {
 const Home = ({ data }: HomeProps) => {
     return (
         <Box>
+            <SEO
+                openGraphType="website"
+                schemaType="article"
+                title="Home | new."
+                description="Home Page"
+            />
             <Grid
                 justifyContent="center"
                 templateColumns={{
