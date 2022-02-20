@@ -75,6 +75,7 @@ const NewsDetails = ({ data }: NewsDetailsProps) => {
                     />
                 </Box>
                 <Author
+                    userId={data.author.id}
                     email={data.author.email}
                     profilePhoto={data.author.profile_photo}
                 />
