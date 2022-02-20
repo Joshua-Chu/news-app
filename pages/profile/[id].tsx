@@ -1,17 +1,23 @@
-import { Grid } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { supabase } from "../../lib/supabase/supabaseClient";
 import { News, ExtractedNews } from "../../types/news";
 import { extractNews } from "../../utils";
 import { NewsCard } from "../../component/NewsCard";
+import { SectionTitle } from "../../component/SectionTitle";
+import { useAuth } from "../../store/AuthProvider";
 
 type MyProfileProps = {
     data: ExtractedNews[];
 };
 
 const MyProfile = ({ data }: MyProfileProps) => {
+    const { currentUser } = useAuth();
     return (
-        <>
+        <Box>
+            <SectionTitle>
+                @{currentUser && currentUser.email.split("@")[0]}&apos;s News
+            </SectionTitle>
             <Grid
                 justifyContent="center"
                 templateColumns={{
@@ -25,7 +31,7 @@ const MyProfile = ({ data }: MyProfileProps) => {
                     <NewsCard {...cardData} key={cardData.id} />
                 ))}
             </Grid>
-        </>
+        </Box>
     );
 };
 
