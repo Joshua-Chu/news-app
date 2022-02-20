@@ -14,24 +14,31 @@ type MyProfileProps = {
 const MyProfile = ({ data }: MyProfileProps) => {
     const { currentUser } = useAuth();
     return (
-        <Box>
-            <SectionTitle>
-                @{currentUser && currentUser.email.split("@")[0]}&apos;s News
-            </SectionTitle>
-            <Grid
-                justifyContent="center"
-                templateColumns={{
-                    base: "1fr",
-                    md: "repeat(2, minmax(auto, 350px))",
-                    lg: "repeat(3, 1fr)",
-                }}
-                gap="20px"
-            >
-                {data.map(cardData => (
-                    <NewsCard {...cardData} key={cardData.id} />
-                ))}
-            </Grid>
-        </Box>
+        <>
+            <Box>
+                <SectionTitle>
+                    @{currentUser && currentUser.email.split("@")[0]}&apos;s
+                    News
+                </SectionTitle>
+                <Grid
+                    justifyContent="center"
+                    templateColumns={{
+                        base: "1fr",
+                        md: "repeat(2, minmax(auto, 350px))",
+                        lg: "repeat(3, 1fr)",
+                    }}
+                    gap="20px"
+                >
+                    {data.map(cardData => (
+                        <NewsCard
+                            {...cardData}
+                            key={cardData.id}
+                            route="/profile"
+                        />
+                    ))}
+                </Grid>
+            </Box>
+        </>
     );
 };
 
