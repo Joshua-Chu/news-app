@@ -213,11 +213,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     const { data: news } = await supabase
         .from<RawNews>("news")
-        .select(
-            `
-    *
-  `
-        )
+        .select(`*`)
         .eq("id", id);
 
     if (news && news[0]) {

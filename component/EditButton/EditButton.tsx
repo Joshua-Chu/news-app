@@ -15,9 +15,10 @@ import { useRouter } from "next/router";
 type EditButtonProps = {
     title: string;
     id: string;
+    isNewsDetail?: boolean;
 };
 
-export const EditButton = ({ title, id }: EditButtonProps) => {
+export const EditButton = ({ title, id, isNewsDetail }: EditButtonProps) => {
     const router = useRouter();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -27,11 +28,12 @@ export const EditButton = ({ title, id }: EditButtonProps) => {
     return (
         <>
             <Box
+                cursor="pointer"
                 position="absolute"
                 fontSize="2xl"
                 right="12"
                 top="2"
-                visibility="hidden"
+                visibility={isNewsDetail ? "visible" : "hidden"}
                 className="delete-btn"
                 onClick={e => {
                     e.stopPropagation();
@@ -66,4 +68,8 @@ export const EditButton = ({ title, id }: EditButtonProps) => {
             </Modal>
         </>
     );
+};
+
+EditButton.defaultProps = {
+    isNewsDetail: false,
 };
