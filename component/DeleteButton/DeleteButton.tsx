@@ -16,11 +16,16 @@ import { supabase } from "../../lib/supabase/supabaseClient";
 type DeleteButtonProps = {
     title: string;
     id: string;
+    isNewsDetail?: boolean;
 };
 
 // TODO: router reload change
 
-export const DeleteButton = ({ title, id }: DeleteButtonProps) => {
+export const DeleteButton = ({
+    title,
+    id,
+    isNewsDetail,
+}: DeleteButtonProps) => {
     const router = useRouter();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -33,11 +38,11 @@ export const DeleteButton = ({ title, id }: DeleteButtonProps) => {
     return (
         <>
             <Box
+                visibility={isNewsDetail ? "visible" : "hidden"}
                 position="absolute"
                 fontSize="2xl"
                 right="2"
                 top="2"
-                visibility="hidden"
                 className="delete-btn"
                 onClick={e => {
                     e.stopPropagation();
@@ -72,4 +77,8 @@ export const DeleteButton = ({ title, id }: DeleteButtonProps) => {
             </Modal>
         </>
     );
+};
+
+DeleteButton.defaultProps = {
+    isNewsDetail: false,
 };

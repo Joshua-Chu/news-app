@@ -3,7 +3,10 @@ import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Author } from "../../component/Author";
+import { DeleteButton } from "../../component/DeleteButton";
+import { EditButton } from "../../component/EditButton";
 import { supabase } from "../../lib/supabase/supabaseClient";
+import { useAuth } from "../../store/AuthProvider";
 import { ExtractedNews, News } from "../../types/news";
 import { extractNews } from "../../utils";
 
@@ -12,9 +15,20 @@ type NewsDetailsProps = {
 };
 
 const NewsDetails = ({ data }: NewsDetailsProps) => {
+    const { currentUser } = useAuth();
     const router = useRouter();
     return (
-        <Box>
+        <Box position="relative">
+            {currentUser && data.author.id === currentUser.id && (
+                <>
+                    <DeleteButton
+                        title={data.title}
+                        id={data.id}
+                        isNewsDetail
+                    />
+                    <EditButton title={data.title} id={data.id} isNewsDetail />
+                </>
+            )}
             <Button onClick={() => router.push("/")} mb="48px">
                 <Text as="p" color="gray.500">
                     Back
@@ -56,10 +70,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const { data: news } = await supabase
         .from<News>("news")
         .select(
-            `
-    *,
-    users(id, email, profile_photo)
-  `
+            `*,
+        users(id, email, profile_photo)`
         )
         .eq("id", id);
 
