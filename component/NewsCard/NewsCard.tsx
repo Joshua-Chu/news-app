@@ -28,9 +28,6 @@ type NewsCardProps = {
     route: string;
 };
 
-// TODO:  Add how many mins to read
-// TODO : proper redirection after delete
-
 export const NewsCard = ({
     id,
     title,

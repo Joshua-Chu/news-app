@@ -13,7 +13,7 @@ import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SectionTitle } from "../../component/SectionTitle";
 import { SEO } from "../../component/SEO";
 import { supabase } from "../../lib/supabase/supabaseClient";
@@ -40,6 +40,12 @@ const EditNews = ({ data }: EditNewsProps) => {
         data.banner
     );
     const [imageFile, setImageFile] = useState<File | null>(null);
+
+    useEffect(() => {
+        if (!currentUser || currentUser.id !== data.author) {
+            router.push("/");
+        }
+    }, [currentUser, router, data.author]);
 
     const imageUploadHandler = (e: React.SyntheticEvent) => {
         e.preventDefault();

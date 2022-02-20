@@ -20,8 +20,6 @@ import { SectionTitle } from "../component/SectionTitle";
 import { SEO } from "../component/SEO";
 import { useAuth } from "../store/AuthProvider";
 
-//  TODO: Form validation
-
 const SignUp = () => {
     const router = useRouter();
     const { signup, loading } = useAuth();

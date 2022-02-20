@@ -20,8 +20,6 @@ type DeleteButtonProps = {
     isNewsDetail?: boolean;
 };
 
-// TODO: router reload change
-
 export const DeleteButton = ({
     title,
     id,
@@ -36,7 +34,7 @@ export const DeleteButton = ({
         const { data } = await supabase.from("news").delete().match({ id });
         if (data) {
             setLoading(false);
-            router.reload();
+            router.push("/");
         }
     };
     return (
