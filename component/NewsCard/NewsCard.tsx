@@ -55,7 +55,7 @@ export const NewsCard = ({
                 >
                     {title}
                 </Heading>
-                <Text
+                <Box
                     color="gray.500"
                     dangerouslySetInnerHTML={{ __html: content }}
                     noOfLines={3}
