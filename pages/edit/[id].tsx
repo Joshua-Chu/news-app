@@ -15,6 +15,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SectionTitle } from "../../component/SectionTitle";
+import { SEO } from "../../component/SEO";
 import { supabase } from "../../lib/supabase/supabaseClient";
 import { useAuth } from "../../store/AuthProvider";
 import { RawNews } from "../../types/news";
@@ -109,6 +110,13 @@ const EditNews = ({ data }: EditNewsProps) => {
 
     return (
         <Container>
+            <SEO
+                url={router.asPath}
+                openGraphType="website"
+                schemaType="article"
+                title={`Edit | ${data.title}`}
+                description={`Editing | ${data.title}`}
+            />
             <SectionTitle>Edit</SectionTitle>
             <form onSubmit={onEditNewsHandler}>
                 <Box maxW={{ sm: "390px", md: "800px", lg: "996px" }} mx="auto">

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { Author } from "../../component/Author";
 import { DeleteButton } from "../../component/DeleteButton";
 import { EditButton } from "../../component/EditButton";
+import { SEO } from "../../component/SEO";
 import { supabase } from "../../lib/supabase/supabaseClient";
 import { useAuth } from "../../store/AuthProvider";
 import { ExtractedNews, News } from "../../types/news";
@@ -17,48 +18,68 @@ type NewsDetailsProps = {
 const NewsDetails = ({ data }: NewsDetailsProps) => {
     const { currentUser } = useAuth();
     const router = useRouter();
-    return (
-        <Box position="relative">
-            {currentUser && data.author.id === currentUser.id && (
-                <>
-                    <DeleteButton
-                        title={data.title}
-                        id={data.id}
-                        isNewsDetail
-                    />
-                    <EditButton title={data.title} id={data.id} isNewsDetail />
-                </>
-            )}
-            <Button onClick={() => router.push("/")} mb="48px">
-                <Text as="p" color="gray.500">
-                    Back
-                </Text>
-            </Button>
-            <Heading as="h2" textAlign="center" mb="32px" color="gray.600">
-                {data.title}
-            </Heading>
-            <Box
-                mb="32px"
-                position="relative"
-                h="350px"
-                width={{ base: "100vw", lg: "auto" }}
-                left={{ base: "50%", lg: "unset" }}
-                right={{ base: "50%", lg: "unset" }}
-                ml={{ base: "-50vw", lg: "unset" }}
-                mr={{ base: "-50vw", lg: "unset" }}
-            >
-                <Image src={data.banner} layout="fill" objectFit="cover" />
-            </Box>
-            <Author
-                email={data.author.email}
-                profilePhoto={data.author.profile_photo}
-            />
 
-            <Box
-                color="gray.500"
-                dangerouslySetInnerHTML={{ __html: data.content }}
+    return (
+        <>
+            <SEO
+                url={router.asPath}
+                openGraphType="website"
+                schemaType="article"
+                title={`${data.title} | news`}
+                description={data.title}
+                image={data.banner}
             />
-        </Box>
+            <Box position="relative">
+                {currentUser && data.author.id === currentUser.id && (
+                    <>
+                        <DeleteButton
+                            title={data.title}
+                            id={data.id}
+                            isNewsDetail
+                        />
+                        <EditButton
+                            title={data.title}
+                            id={data.id}
+                            isNewsDetail
+                        />
+                    </>
+                )}
+                <Button onClick={() => router.push("/")} mb="48px">
+                    <Text as="p" color="gray.500">
+                        Back
+                    </Text>
+                </Button>
+                <Heading as="h2" textAlign="center" mb="32px" color="gray.600">
+                    {data.title}
+                </Heading>
+                <Box
+                    mb="32px"
+                    position="relative"
+                    h="350px"
+                    width={{ base: "100vw", lg: "auto" }}
+                    left={{ base: "50%", lg: "unset" }}
+                    right={{ base: "50%", lg: "unset" }}
+                    ml={{ base: "-50vw", lg: "unset" }}
+                    mr={{ base: "-50vw", lg: "unset" }}
+                >
+                    <Image
+                        src={data.banner}
+                        layout="fill"
+                        objectFit="cover"
+                        alt="news banner"
+                    />
+                </Box>
+                <Author
+                    email={data.author.email}
+                    profilePhoto={data.author.profile_photo}
+                />
+
+                <Box
+                    color="gray.800"
+                    dangerouslySetInnerHTML={{ __html: data.content }}
+                />
+            </Box>
+        </>
     );
 };
 

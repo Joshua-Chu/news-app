@@ -11,8 +11,10 @@ import {
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
+import { SEO } from "../component/SEO";
 import { supabase } from "../lib/supabase/supabaseClient";
 import { useAuth } from "../store/AuthProvider";
 
@@ -23,7 +25,7 @@ const QuillNoSSRWrapper = dynamic(import("react-quill"), {
 
 const CreateNews = () => {
     const { currentUser } = useAuth();
-
+    const router = useRouter();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>("");
@@ -84,6 +86,16 @@ const CreateNews = () => {
 
     return (
         <Container>
+            <SEO
+                url={router.asPath}
+                openGraphType="website"
+                schemaType="article"
+                title={`${currentUser?.email.split("@")[0]}'s Profile | news.`}
+                description={`This is ${
+                    currentUser?.email.split("@")[0]
+                }'s Profile`}
+                image={currentUser?.profilePhoto}
+            />
             <SectionTitle>Create</SectionTitle>
             <form onSubmit={onCreateNewsHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">

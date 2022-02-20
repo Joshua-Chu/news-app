@@ -1,11 +1,13 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import { supabase } from "../../lib/supabase/supabaseClient";
 import { News, ExtractedNews } from "../../types/news";
 import { extractNews } from "../../utils";
 import { NewsCard } from "../../component/NewsCard";
 import { SectionTitle } from "../../component/SectionTitle";
 import { useAuth } from "../../store/AuthProvider";
+import { SEO } from "../../component/SEO";
 
 type MyProfileProps = {
     data: ExtractedNews[];
@@ -13,8 +15,19 @@ type MyProfileProps = {
 
 const MyProfile = ({ data }: MyProfileProps) => {
     const { currentUser } = useAuth();
+    const router = useRouter();
     return (
         <>
+            <SEO
+                url={router.asPath}
+                openGraphType="website"
+                schemaType="article"
+                title={`This is ${currentUser?.email.split("@")[0]}'s Profile`}
+                description={`This is ${
+                    currentUser?.email.split("@")[0]
+                }'s Profile`}
+                image={currentUser?.profilePhoto}
+            />
             <Box>
                 <SectionTitle>
                     @{currentUser && currentUser.email.split("@")[0]}&apos;s

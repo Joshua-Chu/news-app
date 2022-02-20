@@ -16,6 +16,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SectionTitle } from "../component/SectionTitle";
+import { SEO } from "../component/SEO";
 import { useAuth } from "../store/AuthProvider";
 
 // TODO: Abstract Input and Label in another component
@@ -80,6 +81,13 @@ const SignUp = () => {
 
     return (
         <Container>
+            <SEO
+                url="/signup"
+                openGraphType="website"
+                schemaType="article"
+                title="Sign up | news."
+                description="Register now"
+            />
             <SectionTitle>Register</SectionTitle>
             <form onSubmit={onRegisterHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
