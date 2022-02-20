@@ -104,11 +104,12 @@ export const NewsCard = ({
     route,
 }: NewsCardProps) => {
     const { currentUser } = useAuth();
-
+    const router = useRouter();
     const computedDate = new Date(created_at).toDateString().slice(4).trim();
     return (
         <>
             <Box
+                onClick={() => router.push(`/news/${id}`)}
                 mx="auto"
                 key={id}
                 maxW={{ base: "350px", lg: "300px" }}
