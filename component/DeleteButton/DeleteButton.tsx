@@ -11,6 +11,7 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { supabase } from "../../lib/supabase/supabaseClient";
 
 type DeleteButtonProps = {
@@ -28,10 +29,13 @@ export const DeleteButton = ({
 }: DeleteButtonProps) => {
     const router = useRouter();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [loading, setLoading] = useState(false);
 
     const onDeleteNews = async () => {
+        setLoading(true);
         const { data } = await supabase.from("news").delete().match({ id });
         if (data) {
+            setLoading(false);
             router.reload();
         }
     };
@@ -67,10 +71,19 @@ export const DeleteButton = ({
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="red" mr={3} onClick={onClose}>
+                        <Button
+                            colorScheme="red"
+                            mr={3}
+                            onClick={onClose}
+                            isDisabled={loading}
+                        >
                             Close
                         </Button>
-                        <Button variant="ghost" onClick={onDeleteNews}>
+                        <Button
+                            variant="ghost"
+                            onClick={onDeleteNews}
+                            isLoading={loading}
+                        >
                             Delete
                         </Button>
                     </ModalFooter>

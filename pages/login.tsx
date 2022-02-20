@@ -1,20 +1,11 @@
 import NextLink from "next/link";
-import {
-    Box,
-    Button,
-    Container,
-    Flex,
-    FormControl,
-    FormLabel,
-    Input,
-    Link,
-    Text,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Link, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { SectionTitle } from "../component/SectionTitle";
 import { useAuth } from "../store/AuthProvider";
 import { SEO } from "../component/SEO";
+import { FormInput } from "../component/FornInput";
 
 const Login = () => {
     const router = useRouter();
@@ -48,28 +39,20 @@ const Login = () => {
             <form onSubmit={onLoginHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
                     <Flex direction="column" gap="4">
-                        <FormControl>
-                            <FormLabel htmlFor="email">
-                                <Text color="gray.600">email</Text>
-                            </FormLabel>
-                            <Input
-                                id="email"
-                                type="email"
-                                size="md"
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="password">
-                                <Text color="gray.600">password</Text>
-                            </FormLabel>
-                            <Input
-                                id="password"
-                                type="password"
-                                size="md"
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </FormControl>
+                        <FormInput
+                            value={email}
+                            onChange={setEmail}
+                            type="email"
+                        >
+                            email
+                        </FormInput>
+                        <FormInput
+                            value={password}
+                            onChange={setPassword}
+                            type="password"
+                        >
+                            password
+                        </FormInput>
 
                         <Button
                             isLoading={loading}
