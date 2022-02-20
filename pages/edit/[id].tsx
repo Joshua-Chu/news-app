@@ -32,6 +32,7 @@ type EditNewsProps = {
 const EditNews = ({ data }: EditNewsProps) => {
     const { currentUser } = useAuth();
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     const [title, setTitle] = useState(data.title);
     const [content, setContent] = useState(data.content);
@@ -56,6 +57,7 @@ const EditNews = ({ data }: EditNewsProps) => {
     };
 
     const onEditNewsHandler = async (e: React.SyntheticEvent) => {
+        setLoading(true);
         e.preventDefault();
 
         // Extract Image
@@ -103,8 +105,8 @@ const EditNews = ({ data }: EditNewsProps) => {
             setContent("");
             setImageSrc("");
             setImageFile(null);
-
-            router.push(`/news/${data.id}`);
+            setLoading(true);
+            router.push(`/`);
         }
     };
 
@@ -203,6 +205,7 @@ const EditNews = ({ data }: EditNewsProps) => {
                                     bg: "gray.100",
                                 }}
                                 type="submit"
+                                isLoading={loading}
                             >
                                 <Text>Update</Text>
                             </Button>
