@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { Author } from "../../component/Author";
@@ -13,6 +13,11 @@ type NewsDetailsProps = {
 const NewsDetails = ({ data }: NewsDetailsProps) => {
     return (
         <Box>
+            <Button>
+                <Text as="p" color="gray.500">
+                    Back
+                </Text>
+            </Button>
             <Heading as="h2" textAlign="center" mb="32px" color="gray.600">
                 {data.title}
             </Heading>
