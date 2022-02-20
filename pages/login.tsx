@@ -30,6 +30,7 @@ const Login = () => {
     return (
         <Container>
             <SEO
+                url="/login"
                 openGraphType="website"
                 schemaType="article"
                 title="Login | news."
