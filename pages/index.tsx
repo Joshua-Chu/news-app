@@ -1,4 +1,5 @@
 import { Box, Grid } from "@chakra-ui/react";
+import { GetServerSideProps } from "next";
 import { NewsCard } from "../component/NewsCard";
 // import { useAuth } from "../store/AuthProvider";
 
@@ -38,3 +39,11 @@ const Home = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    return {
+        props: {
+            data: "",
+        },
+    };
+};
