@@ -1,6 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
-import { GetServerSideProps } from "next";
+// import { GetServerSideProps } from "next";
 import { NewsCard } from "../component/NewsCard";
+// import { supabase } from "../lib/supabase/supabaseClient";
 // import { useAuth } from "../store/AuthProvider";
 
 const cardData = {
@@ -18,7 +19,6 @@ const cardData = {
 };
 
 const Home = () => {
-    // const { currentUser } = useAuth();
     return (
         <Box>
             <Grid
@@ -40,10 +40,15 @@ const Home = () => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    return {
-        props: {
-            data: "",
-        },
-    };
-};
+// export const getServerSideProps: GetServerSideProps = async () => {
+//     const { data: news, error } = await supabase.from("news").select(`
+//     *,
+//     users(id, email, profile_photo)
+//   `);
+
+//     return {
+//         props: {
+//             data: news,
+//         },
+//     };
+// };

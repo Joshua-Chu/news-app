@@ -70,7 +70,7 @@ const CreateNews = () => {
                 title,
                 content,
                 banner: imageData.secure_url,
-                author: currentUser?.id,
+                authorId: currentUser?.id,
             },
         ]);
 
