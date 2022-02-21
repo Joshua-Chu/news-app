@@ -1,6 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase/supabaseClient";
 import { News, ExtractedNews } from "../../types/news";
 import { extractNews } from "../../utils";
@@ -15,7 +16,28 @@ type MyProfileProps = {
 
 const MyProfile = ({ data }: MyProfileProps) => {
     const { currentUser } = useAuth();
+    const [tempAuth, setTempAuth] = useState("");
     const router = useRouter();
+
+    useEffect(() => {
+        const setTempUser = async () => {
+            if (!currentUser) {
+                const { id } = router.query;
+                const { data: tempUser } = await supabase
+                    .from("users")
+                    .select("email")
+                    .eq("id", id);
+
+                if (tempUser) {
+                    setTempAuth(tempUser[0].email as unknown as string);
+                }
+            }
+
+            return null;
+        };
+
+        setTempUser();
+    }, [currentUser, router.query]);
     return (
         <>
             <SEO
@@ -30,8 +52,11 @@ const MyProfile = ({ data }: MyProfileProps) => {
             />
             <Box>
                 <SectionTitle>
-                    @{currentUser && currentUser.email.split("@")[0]}&apos;s
-                    News
+                    {currentUser
+                        ? `@${currentUser.email.split("@")[0]}'s
+                    News`
+                        : `@${tempAuth.split("@")[0]}'s
+                    News`}
                 </SectionTitle>
                 <Grid
                     justifyContent="center"
