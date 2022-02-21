@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import { Box, Button, Container, Flex, Link, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SectionTitle } from "../component/SectionTitle";
 import { useAuth } from "../store/AuthProvider";
@@ -9,9 +9,18 @@ import { FormInput } from "../component/FornInput";
 
 const Login = () => {
     const router = useRouter();
-    const { login, loading } = useAuth();
+    const { login, loading, error } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        if (email === "" || password === "") {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [email, password]);
 
     const onLoginHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -36,6 +45,9 @@ const Login = () => {
                 description="Login Page"
             />
             <SectionTitle>Login</SectionTitle>
+            <Text textAlign="center" mx="auto" mb="16px" color="red.600">
+                {error}
+            </Text>
             <form onSubmit={onLoginHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
                     <Flex direction="column" gap="4">
@@ -66,6 +78,7 @@ const Login = () => {
                                 bg: "gray.100",
                             }}
                             type="submit"
+                            isDisabled={isDisabled}
                         >
                             <Text>Login</Text>
                         </Button>

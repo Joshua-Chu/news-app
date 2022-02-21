@@ -59,7 +59,7 @@ export function AuthProvider({ children }: Props) {
 
     const login = async (email: string, password: string) => {
         setLoading(true);
-        const { user } = await supabase.auth.signIn({
+        const { user, error: loginError } = await supabase.auth.signIn({
             email,
             password,
         });
@@ -73,7 +73,10 @@ export function AuthProvider({ children }: Props) {
             setLoading(false);
             return { status: "success" };
         }
-
+        if (loginError) {
+            setError(loginError.message as string);
+        }
+        setLoading(false);
         return { status: "error" };
     };
 
