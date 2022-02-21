@@ -16,6 +16,7 @@ export type authContextType = {
     }>;
     logout: () => void;
     loading: boolean;
+    error: string | undefined;
 };
 
 const AuthContext = createContext<authContextType>({} as authContextType);
@@ -32,6 +33,15 @@ export function AuthProvider({ children }: Props) {
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        if (error) {
+            setTimeout(() => {
+                setError("");
+            }, 2500);
+        }
+    }, [error]);
 
     useEffect(() => {
         if (!currentUser) {
@@ -73,7 +83,7 @@ export function AuthProvider({ children }: Props) {
         profilePhoto: string
     ) => {
         setLoading(true);
-        const { user } = await supabase.auth.signUp(
+        const { user, error: signUpError } = await supabase.auth.signUp(
             {
                 email,
                 password,
@@ -86,13 +96,15 @@ export function AuthProvider({ children }: Props) {
         );
 
         if (user) {
-            const { data } = await supabase.from<UsersTable>("users").insert([
-                {
-                    id: user.id,
-                    email: user.email,
-                    profile_photo: user.user_metadata.profile_photo,
-                },
-            ]);
+            const { data, error: usersError } = await supabase
+                .from<UsersTable>("users")
+                .insert([
+                    {
+                        id: user.id,
+                        email: user.email,
+                        profile_photo: user.user_metadata.profile_photo,
+                    },
+                ]);
 
             if (data) {
                 setCurrentUser({
@@ -103,16 +115,23 @@ export function AuthProvider({ children }: Props) {
                 setLoading(false);
                 return { status: "success" };
             }
-
+            if (usersError) {
+                setError(usersError.message as string);
+            }
+            setLoading(false);
             return { status: "error" };
         }
 
+        if (signUpError) {
+            setError(signUpError.message as string);
+        }
+        setLoading(false);
         return { status: "error" };
     };
 
     const logout = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (!error) {
+        const { error: logOutError } = await supabase.auth.signOut();
+        if (!logOutError) {
             setCurrentUser(null);
             router.push("/");
         }
@@ -124,6 +143,7 @@ export function AuthProvider({ children }: Props) {
         signup,
         logout,
         loading,
+        error,
     };
 
     return (

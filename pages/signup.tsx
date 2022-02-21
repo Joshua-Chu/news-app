@@ -14,7 +14,7 @@ import {
 import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormInput } from "../component/FornInput";
 import { SectionTitle } from "../component/SectionTitle";
 import { SEO } from "../component/SEO";
@@ -22,12 +22,20 @@ import { useAuth } from "../store/AuthProvider";
 
 const SignUp = () => {
     const router = useRouter();
-    const { signup, loading } = useAuth();
-
+    const { signup, loading, error } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>("");
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        if (email === "" || password === "" || !imageFile) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [email, password, imageFile]);
 
     const imageUploadHandler = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -85,6 +93,9 @@ const SignUp = () => {
                 description="Register now"
             />
             <SectionTitle>Register</SectionTitle>
+            <Text textAlign="center" mx="auto" mb="16px" color="red.600">
+                {error}
+            </Text>
             <form onSubmit={onRegisterHandler}>
                 <Box maxW={{ sm: "390px" }} mx="auto">
                     <Flex direction="column" gap="4">
@@ -154,6 +165,7 @@ const SignUp = () => {
                                 bg: "gray.100",
                             }}
                             type="submit"
+                            isDisabled={isDisabled}
                         >
                             <Text>Register</Text>
                         </Button>
