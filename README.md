@@ -1,34 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# News Application
 
-## Getting Started
+## Goal
 
-First, run the development server:
+_Create a simple NEWS APPLICATION to showcase your frontend development skills with SEO considerations_
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+-   Users can perform CRUD
+-   Use any technology for the backend
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## [Deployed URL](https://news-app-rho-ten.vercel.app/)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+-   The website is currently deployed on [Vercel](https://vercel.com/). I particularly chose this provider over others because it provides ease of integration with nextjs and has built-in CI/CD and Preview mode for every pull request that you create from the repo.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## [Documentation](https://www.notion.so/Documentation-4edbda7feacb49ef83d6a14e631370d6)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+-   Briefly outlines what the users can do and how to do it
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+-   [NextJs](https://nextjs.org/)
+-   [Typescript](https://www.typescriptlang.org/)
+-   [Chakra UI](https://chakra-ui.com/)
+-   [Supabase](https://supabase.com/)
+-   [Cloudinary](https://cloudinary.com/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+NextJS and Typescript goes along pretty well and is a deadly combination when used right. I used it for this particular application because of the different fetching it provides which I can use to tailor custom solutions for each of my page. This stack also provides ease support for SEO.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+I used Chakra UI for this project because it provides smooth and a rapid development experience. I didn't used styled-components in this situation (which is usually my go to) because of the time constraint. Creating styles from scratch can be quite a lengthy process.
 
-## Deploy on Vercel
+For the backend (database and asset management) I used supabase and cloudinary. Supabase is a firebase alternative which I'm not familiar with but I've been wanting to use. It uses postgres under the hood. And I thought this application might be a perfect excuse to create something with it.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Project Toolings Used:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-   [ESLint](https://eslint.org/) ( Linting )
+-   [Prettier](https://prettier.io/) ( Code Consistency)
+-   [Husky](https://typicode.github.io/husky/#/) ( pre-commit hooks )
+-   [lint-staged](https://github.com/okonet/lint-staged) ( run linter tasks )
+
+## [Design File](<https://www.figma.com/file/r50L1Eex0canW5fiAGCug5/Chakra-UI-Figma-Kit-(Community)?node-id=822%3A9256>)
+
+-   Before I started coding the application, I tried to create a rough design for mobile, tablet, and desktop screens and broke down the requirements into components. I used Chakra UI component library in figma to make the design a lot more consistent
+
+## [Database diagram](https://dbdiagram.io/d/6212ddd6485e433543e778e8)
+
+-   To visualize the relationships of the tables in my database. I created a visual diagram.
+
+## Performance
+
+-   I used lighthouse to assess the performance of my application. Here are the different screens and performance:
+
+### **Home**
+
+![home](https://res.cloudinary.com/dlfecpmkj/image/upload/v1645406788/bvt8vgtsgpkzs3ne5x6u.png)
+
+### **Detail Page**
+
+![detail page](https://res.cloudinary.com/dlfecpmkj/image/upload/v1645407191/zkwtg14ra4umlujiislq.png)
+
+### **Profile Page**
+
+![profile page](https://res.cloudinary.com/dlfecpmkj/image/upload/v1645408319/lomxnryov45lzaqzbamr.png)
+
+-   These metrics are not final and varies depending on the browser, the machine, and the connection speed of the user.
+
+## Security Analysis
+
+-   One of my concern I have at the moment is the parsing of my html text passed in my WYSIWYG editor. It might contain malicious scripts that can be executed at the background. This is entirely possible and definitely there is more room for improvement around this.
+
+-   The authentication I implemented is not rock solid and is only the bare minimum for simple applications, this can be exploited and thus needs more secure improvements.
