@@ -41,6 +41,16 @@ const EditNews = ({ data }: EditNewsProps) => {
     );
     const [imageFile, setImageFile] = useState<File | null>(null);
 
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        if (title === "" || content === "" || !imageFile) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [title, content, imageFile]);
+
     useEffect(() => {
         if (!currentUser || currentUser.id !== data.author) {
             router.push("/");
@@ -212,6 +222,7 @@ const EditNews = ({ data }: EditNewsProps) => {
                                 }}
                                 type="submit"
                                 isLoading={loading}
+                                isDisabled={isDisabled}
                             >
                                 <Text>Update</Text>
                             </Button>
