@@ -31,6 +31,16 @@ const CreateNews = () => {
     const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>("");
     const [imageFile, setImageFile] = useState<File | null>(null);
 
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        if (title === "" || content === "" || !imageFile) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [title, content, imageFile]);
+
     useEffect(() => {
         if (!currentUser) {
             router.push("/login");
@@ -182,6 +192,7 @@ const CreateNews = () => {
                                 bg: "gray.100",
                             }}
                             type="submit"
+                            isDisabled={isDisabled}
                         >
                             <Text>Create</Text>
                         </Button>
