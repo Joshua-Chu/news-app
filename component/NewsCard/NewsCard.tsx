@@ -74,7 +74,7 @@ export const NewsCard = ({
                         mb={6}
                         pos="relative"
                     >
-                        <Image src={banner} layout="fill" />
+                        <Image src={banner} layout="fill" alt="news photo" />
                         {route === "/profile" &&
                             currentUser &&
                             author.id === currentUser.id && (
@@ -111,6 +111,8 @@ export const NewsCard = ({
                             src={author.profile_photo}
                             name="Author"
                             bg="unset"
+                            w="48px"
+                            h="48px"
                         />
                         <Stack direction="column" spacing={0} fontSize="sm">
                             <Text fontWeight={600}>
